@@ -5,6 +5,9 @@
 
 ## Установка
 Сохраните `openui.lua` в вашу файловую систему OpenComputers и подключите библиотеку в своём коде:
+```bash
+wget 'https://github.com/AndreikaKopeika/OpenComputers-OpenUI/blob/main/openui.lua' -f openui.lua
+```
 
 ```lua
 local OpenUI = require("openui")

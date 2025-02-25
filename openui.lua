@@ -443,33 +443,27 @@ function OpenUI.newConsole(params)
   cons.maxLines = params.maxLines or cons.height
   
   function cons:draw()
-      if self.lastDraw == table.concat(self.lines, "\n") then
-          return -- Если ничего не изменилось, не рисуем
-      end
-      self.lastDraw = table.concat(self.lines, "\n")
-      gpu.setBackground(self.bgColor)
-      gpu.fill(self.x, self.y, self.width, self.height, " ")
-      gpu.setForeground(self.fgColor)
-      local startLine = math.max(1, #self.lines - self.height + 1)
-      for i = startLine, #self.lines do
-          gpu.set(self.x, self.y + i - startLine, self.lines[i])
-      end
-      gpu.setForeground(0xFFFFFF)
+    gpu.setBackground(self.bgColor)
+    gpu.fill(self.x, self.y, self.width, self.height, " ")
+    gpu.setForeground(self.fgColor)
+    local startLine = math.max(1, #self.lines - self.height + 1)
+    for i = startLine, #self.lines do
+      local line = self.lines[i]
+      gpu.set(self.x, self.y + i - startLine, line)
+    end
+    gpu.setForeground(0xFFFFFF)
   end
   
   function cons:appendLine(text)
-      local wrapped = wrapText(text, self.width)
-      for _, line in ipairs(wrapped) do
-          table.insert(self.lines, line)
-          if #self.lines > self.maxLines then
-              table.remove(self.lines, 1)
-          end
+    local wrapped = wrapText(text, self.width)
+    for _, line in ipairs(wrapped) do
+      table.insert(self.lines, line)
+      if #self.lines > self.maxLines then
+        table.remove(self.lines, 1)
       end
-      if #self.lines % 5 == 0 then -- Перерисовывать не на каждом вызове
-          self:draw()
-      end
+    end
+    self:draw()
   end
-
   
   function cons:clear()
     self.lines = {}
@@ -484,8 +478,10 @@ end
 ----------------------------------------------------------------
 function OpenUI.print(...)
   local args = {...}
-  local str = table.concat(args, " ") -- Исправлено: убран табулятор, теперь просто пробел
-  str = str:gsub("[%z\1-\31]", "") -- Убираем лишние символы
+  local str = ""
+  for i, v in ipairs(args) do
+    str = str .. tostring(v) .. "\t"
+  end
   if OpenUI.consoleWidget then
     OpenUI.consoleWidget:appendLine(str)
   else
@@ -494,4 +490,3 @@ function OpenUI.print(...)
 end
 
 return OpenUI
-

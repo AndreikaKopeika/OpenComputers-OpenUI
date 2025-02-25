@@ -205,6 +205,7 @@ OpenUI.showError("Ошибка подключения!")
 
 ## Пример
 ```lua
+package.path = package.path .. ";/lib/?.lua;/lib/?/init.lua"
 local OpenUI = require("openui")
 
 -- Создаем главное окно (страницу)

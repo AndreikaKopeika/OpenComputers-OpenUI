@@ -448,7 +448,7 @@ function OpenUI.newConsole(params)
     gpu.setForeground(self.fgColor)
     local startLine = math.max(1, #self.lines - self.height + 1)
     for i = startLine, #self.lines do
-      local line = self.lines[i]
+      local line = self.lines[i]:gsub("[%z\1-\31]", "") -- Убираем лишние управляющие символы
       gpu.set(self.x, self.y + i - startLine, line)
     end
     gpu.setForeground(0xFFFFFF)
@@ -478,10 +478,8 @@ end
 ----------------------------------------------------------------
 function OpenUI.print(...)
   local args = {...}
-  local str = ""
-  for i, v in ipairs(args) do
-    str = str .. tostring(v) .. "\t"
-  end
+  local str = table.concat(args, " ") -- Исправлено: убран табулятор, теперь просто пробел
+  str = str:gsub("[%z\1-\31]", "") -- Убираем лишние символы
   if OpenUI.consoleWidget then
     OpenUI.consoleWidget:appendLine(str)
   else
@@ -490,3 +488,4 @@ function OpenUI.print(...)
 end
 
 return OpenUI
+

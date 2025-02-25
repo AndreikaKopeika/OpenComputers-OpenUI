@@ -6,7 +6,12 @@
 ## Установка
 Сохраните `openui.lua` в вашу файловую систему OpenComputers и подключите библиотеку в своём коде:
 ```bash
-pastebin get vSjUmJHj -f openui.lua
+pastebin get vSjUmJHj -f installer
+```
+После скачивания запустите установщик командой
+
+```bash
+installer
 ```
 
 ```lua

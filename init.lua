@@ -5,6 +5,7 @@ OpenUI.mainPage = nil
 OpenUI.running = false  -- флаг работы цикла
 
 -- Загружаем вспомогательные модули
+package.path = package.path .. ";/lib/openui/?.lua"
 OpenUI.utils = require("openui.utils")
 OpenUI.page = require("openui.page")
 OpenUI.widgets = {

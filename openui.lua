@@ -5,15 +5,15 @@ OpenUI.mainPage = nil
 OpenUI.running = false  -- флаг работы цикла
 
 -- Загружаем вспомогательные модули
-OpenUI.utils = require("/lib/openui/utils")
-OpenUI.page = require("/lib/openui/page")
+OpenUI.utils = require("utils")
+OpenUI.page = require("page")
 OpenUI.widgets = {
-  button = require("/lib/openui/widgets/button"),
-  label = require("/lib/openui/widgets/label"),
-  textinput = require("/lib/openui/widgets/textinput"),
-  checkbox = require("/lib/openui/widgets/checkbox"),
-  progressbar = require("/lib/openui/widgets/progressbar"),
-  console = require("/lib/openui/widgets/console")
+  button = require("widgets.button"),
+  label = require("widgets.label"),
+  textinput = require("widgets.textinput"),
+  checkbox = require("widgets.checkbox"),
+  progressbar = require("widgets.progressbar"),
+  console = require("widgets.console")
 }
 ----------------------------------------------------------------
 -- Функция запуска основного цикла событий

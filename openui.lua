@@ -443,27 +443,33 @@ function OpenUI.newConsole(params)
   cons.maxLines = params.maxLines or cons.height
   
   function cons:draw()
-    gpu.setBackground(self.bgColor)
-    gpu.fill(self.x, self.y, self.width, self.height, " ")
-    gpu.setForeground(self.fgColor)
-    local startLine = math.max(1, #self.lines - self.height + 1)
-    for i = startLine, #self.lines do
-      local line = self.lines[i]:gsub("[%z\1-\31]", "") -- Убираем лишние управляющие символы
-      gpu.set(self.x, self.y + i - startLine, line)
-    end
-    gpu.setForeground(0xFFFFFF)
+      if self.lastDraw == table.concat(self.lines, "\n") then
+          return -- Если ничего не изменилось, не рисуем
+      end
+      self.lastDraw = table.concat(self.lines, "\n")
+      gpu.setBackground(self.bgColor)
+      gpu.fill(self.x, self.y, self.width, self.height, " ")
+      gpu.setForeground(self.fgColor)
+      local startLine = math.max(1, #self.lines - self.height + 1)
+      for i = startLine, #self.lines do
+          gpu.set(self.x, self.y + i - startLine, self.lines[i])
+      end
+      gpu.setForeground(0xFFFFFF)
   end
   
   function cons:appendLine(text)
-    local wrapped = wrapText(text, self.width)
-    for _, line in ipairs(wrapped) do
-      table.insert(self.lines, line)
-      if #self.lines > self.maxLines then
-        table.remove(self.lines, 1)
+      local wrapped = wrapText(text, self.width)
+      for _, line in ipairs(wrapped) do
+          table.insert(self.lines, line)
+          if #self.lines > self.maxLines then
+              table.remove(self.lines, 1)
+          end
       end
-    end
-    self:draw()
+      if #self.lines % 5 == 0 then -- Перерисовывать не на каждом вызове
+          self:draw()
+      end
   end
+
   
   function cons:clear()
     self.lines = {}

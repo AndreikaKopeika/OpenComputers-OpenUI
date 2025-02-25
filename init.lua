@@ -5,15 +5,15 @@ OpenUI.mainPage = nil
 OpenUI.running = false  -- флаг работы цикла
 
 -- Загружаем вспомогательные модули
-OpenUI.utils = require("utils")
-OpenUI.page = require("page")
+OpenUI.utils = require("openui.utils")
+OpenUI.page = require("openui.page")
 OpenUI.widgets = {
-  button = require("widgets.button"),
-  label = require("widgets.label"),
-  textinput = require("widgets.textinput"),
-  checkbox = require("widgets.checkbox"),
-  progressbar = require("widgets.progressbar"),
-  console = require("widgets.console")
+  button = require("openui.widgets.button"),
+  label = require("openui.widgets.label"),
+  textinput = require("openui.widgets.textinput"),
+  checkbox = require("openui.widgets.checkbox"),
+  progressbar = require("openui.widgets.progressbar"),
+  console = require("openui.widgets.console")
 }
 
 ----------------------------------------------------------------

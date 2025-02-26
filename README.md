@@ -264,6 +264,7 @@ local fileChooser = OpenUI.newFileChooser{
   fgColor = 0xFFFFFF,
   title = "File Chooser",
   startPath = "/home",
+  fileFilter = {".oui"},
   onSelect = function(filePath)
     OpenUI.print("Выбран файл: " .. filePath)
     -- Загружаем выбранное изображение в imageWidget
